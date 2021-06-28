@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 import { Ionicons } from '@expo/vector-icons';
+//import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -46,34 +47,63 @@ function SettingsStackScreen() {
 }
 
 function HomeScreenNav({ navigation }) {
+  React.useLayoutEffect(() => {
+      navigation.setOptions({
+        headerLeft: () => 
+                    <View style={{
+                      marginLeft:10,
+                      //backgroundColor: '#8c8c8c', 
+                      //color: '#8c8c8c',
+                      //flexDirection: 'row'
+                      }}>
+                      <Ionicons name="search" color={'#000'} size={30} />
+                    </View>,
+        headerRight: () => 
+                <View style={{
+                  marginRight:10,
+                  //backgroundColor: '#8c8c8c', 
+                  //color: '#8c8c8c',
+                  //flexDirection: 'row'
+                  }}>
+                  <Ionicons name="paper-plane" color={'#000'} size={30} 
+                    onPress={() => navigation.navigate('Settings')}
+                  />
+                </View>,   
+        headerTitle: () => (
+          <Text
+            style={{color: 'black', fontWeight: 'bold', alignSelf:'center', fontSize:24}}>
+            Instagram
+          </Text>
+        ),
+        headerStyle: {
+          backgroundColor: '#d8d8d8', //'#f4511e',
+
+        },
+        headerTintColor: 'black', //Set Header text color
+        // headerTitleStyle: {
+        //   fontWeight: 'bold', //Set Header text style
+        // },      
+      },
+      
+      )
+    }, [navigation]);
+
   return (
     <View>
       <HomeScreen/>
-      <View style={{     
+      {/* <View style={{     
                 zIndex: 1040,
                 flex: 1,
                 alignSelf: 'flex-end',
                 marginTop: -45,
                 position: 'absolute',             
-               
-                right: 10,
-
-            //    top: 5,
-        //  alignItems:'flex-end', 
-        //  justifyContent:'flex-end' 
+                right: 60,
         }}>
         <Button
-          //ViewComponent={LinearGradient} // Don't forget this!
-          // linearGradientProps={{
-          // colors: ['#ffffff','blue', 'grey'],
-          // start: { x: 0, y: 0.5 },
-          // end: { x: 1, y: 0.5 },
-          // }}
-          style={{backgroundColor: '#8c8c8c', color: '#8c8c8c',}}
           title="Settings"
           onPress={() => navigation.navigate('Settings')}
         />
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -82,8 +112,30 @@ function HomeScreenNav({ navigation }) {
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Homee" component={HomeScreenNav}  />
+    <HomeStack.Navigator
+        screenOptions={{
+          title:'Instagrama',
+          
+            // headerStyle: {
+            //   backgroundColor: '#d8d8d8', //Set Header color
+
+            // },
+            // headerTintColor: 'black', //Set Header text color
+            // headerTitleStyle: {
+            //   fontWeight: 'bold', //Set Header text style
+            // },
+            // flex: 1,
+            // flexDirection: 'row',
+            // alignSelf:'center',
+            // alignItems:'center',
+            // marginLeft: '50%',
+        }}
+    >
+      <HomeStack.Screen 
+        name="Homee" 
+        component={HomeScreenNav}  
+
+        />
       {/* other screens */}
     </HomeStack.Navigator>
   );
@@ -150,7 +202,8 @@ export default function App() {
     <NavigationContainer>
       <RootStack.Navigator
         initialRouteName="HomeActivity"
-        screenOptions={{headerShown: false}}>
+        screenOptions={{headerShown: false}}
+        >
         <RootStack.Screen 
           name="Home" 
           component={HomeTabs} />
